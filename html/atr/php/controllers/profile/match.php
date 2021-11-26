@@ -1,9 +1,9 @@
 <?php 
-namespace controller\user\profile;
+namespace controller\profile\match;
 
 use lib\Auth;
 use model\UserModel;
-use db\MatchQuery;
+use db\profile\MatchQuery;
 
 function get() {
 
@@ -15,6 +15,6 @@ function get() {
 
     $users = MatchQuery::fetchUsers();
 
-    \view\user\profile\index($matchs, $users);
+    \view\profile\match\index($matchs, $users);
 
 }

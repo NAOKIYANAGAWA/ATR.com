@@ -1,8 +1,9 @@
 <?php
 
-namespace model;
+namespace model\profile;
 
 use lib\Msg;
+use model\AbstractModel;
 
 class MatchModel extends AbstractModel
 {

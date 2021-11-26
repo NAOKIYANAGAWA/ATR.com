@@ -28,7 +28,7 @@ function header() {
                     <div class="col-md-auto">
                         <?php if(Auth::isLogin()) : ?>
                             <a href="<?php echo '#'; ?>" class="btn btn-primary mr-2">投稿</a>
-                            <a href="<?php the_url('user/profile'); ?>" class="mr-2">マイページ</a>
+                            <a href="<?php the_url('profile'); ?>" class="mr-2">マイページ</a>
                             <a href="<?php the_url('logout'); ?>">ログアウト</a>
                         <?php else: ?>
                             <a href="<?php the_url('register'); ?>" class="btn btn-primary mr-2">登録</a>

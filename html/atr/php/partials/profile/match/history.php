@@ -1,8 +1,8 @@
 <?php
 
-namespace partials;
+namespace partials\profile\match;
 
-function profile_history($matchs, $users)
+function history($matchs, $users)
 {
 
 ?>

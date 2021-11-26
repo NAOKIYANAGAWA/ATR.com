@@ -1,9 +1,9 @@
 <?php
 
-namespace db;
+namespace db\profile;
 
 use db\DataSource;
-use model\MatchModel;
+use model\profile\MatchModel;
 
 class MatchQuery
 {

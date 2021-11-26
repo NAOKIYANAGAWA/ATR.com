@@ -10,7 +10,7 @@ require_once SOURCE_BASE . 'libs/router.php';
 // Model
 require_once SOURCE_BASE . 'models/abstract.model.php';
 require_once SOURCE_BASE . 'models/user.model.php';
-require_once SOURCE_BASE . 'models/match.model.php';
+require_once SOURCE_BASE . 'models/profile/match.model.php';
 
 // Message
 require_once SOURCE_BASE . 'libs/message.php';
@@ -18,19 +18,21 @@ require_once SOURCE_BASE . 'libs/message.php';
 // DB
 require_once SOURCE_BASE . 'db/datasource.php';
 require_once SOURCE_BASE . 'db/user.query.php';
-require_once SOURCE_BASE . 'db/match.query.php';
+require_once SOURCE_BASE . 'db/profile/match.query.php';
 
 // Partials
 require_once SOURCE_BASE . 'partials/header.php';
 require_once SOURCE_BASE . 'partials/footer.php';
-require_once SOURCE_BASE . 'partials/profile-history.php';
-require_once SOURCE_BASE . 'partials/profile-dashboard.php';
+require_once SOURCE_BASE . 'partials/profile/side_menu.php';
+require_once SOURCE_BASE . 'partials/profile/match/history.php';
+require_once SOURCE_BASE . 'partials/profile/match/dashboard.php';
 
 // View
 require_once SOURCE_BASE . 'views/top.php';
 require_once SOURCE_BASE . 'views/login.php';
 require_once SOURCE_BASE . 'views/register.php';
-require_once SOURCE_BASE . 'views/user/profile.php';
+require_once SOURCE_BASE . 'views/profile.php';
+require_once SOURCE_BASE . 'views/profile/match.php';
 
 use function lib\route;
 
