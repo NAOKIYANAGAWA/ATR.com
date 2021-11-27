@@ -11,6 +11,7 @@ require_once SOURCE_BASE . 'libs/router.php';
 require_once SOURCE_BASE . 'models/abstract.model.php';
 require_once SOURCE_BASE . 'models/user.model.php';
 require_once SOURCE_BASE . 'models/profile/match.model.php';
+require_once SOURCE_BASE . 'models/profile/match/score.model.php';
 
 // Message
 require_once SOURCE_BASE . 'libs/message.php';
@@ -26,6 +27,7 @@ require_once SOURCE_BASE . 'partials/footer.php';
 require_once SOURCE_BASE . 'partials/profile/side_menu.php';
 require_once SOURCE_BASE . 'partials/profile/match/history.php';
 require_once SOURCE_BASE . 'partials/profile/match/dashboard.php';
+require_once SOURCE_BASE . 'partials/profile/match/detail.php';
 
 // View
 require_once SOURCE_BASE . 'views/top.php';

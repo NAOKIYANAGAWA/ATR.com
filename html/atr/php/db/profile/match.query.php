@@ -4,6 +4,7 @@ namespace db\profile;
 
 use db\DataSource;
 use model\profile\MatchModel;
+use model\profile\match\ScoreModel;
 
 class MatchQuery
 {
@@ -54,4 +55,48 @@ class MatchQuery
         return $result;
     }
 
+    public static function fetchScores($matchs)
+    {
+        $db = new DataSource;
+        $sql = 'select * from scores';
+
+        $scores = $db->select($sql, [], DataSource::CLS, ScoreModel::class);
+
+        foreach($matchs as $match){
+            foreach($scores as $score){
+                if($match->id === $score->match_id){
+                    $result[] = $score;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    public static function fetchById($score)
+    {
+
+        // if (!$topic->isValidEmail()) {
+        //     return false;
+        // }
+
+        $db = new DataSource;
+        $sql = '
+        select * from scores where id = :id';
+        //     s.*, u.nickname
+        // from topics t
+        // inner join users u
+        //     on t.user_id = u.id
+        // where t.id = :id
+        //     and t.del_flg != 1
+        //     and u.del_flg != 1
+        // order by t.id desc
+        // ';
+
+        $result = $db->selectOne($sql, [
+            ':id' => $score->id
+        ], DataSource::CLS, ScoreModel::class);
+
+        return $result;
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace partials\profile\match;
 
-function history($matchs, $users)
+function history($matchs, $users, $scores)
 {
 
 ?>
@@ -28,9 +28,13 @@ function history($matchs, $users)
                                 <td><?php echo $user['nickname'] ?></td>
                             <?php endif;?>
                         <?php endforeach; ?>
-                    <td>
-                        <a href="#"><?php echo '1-0'; ?></a>
-                    </td>
+                        <?php foreach($scores as $score) : ?>
+                            <?php if($match->id === $score->match_id):?>
+                                <td>
+                                    <a href="<?php the_url('profile/match?id='); ?><?php echo $score->id;?>"><?php echo $score->set_point_user . '-' . $score->set_point_opponent?></a>
+                                </td>
+                            <?php endif;?>
+                        <?php endforeach; ?>
                     <td><?php echo $match->win_flg ? 'Win' : 'Lose'; ?></td>
                 </tr>
             <?php endforeach; ?>

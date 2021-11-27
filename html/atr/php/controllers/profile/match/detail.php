@@ -1,20 +1,18 @@
 <?php
-namespace controller\user\match\detail;
+namespace controller\profile\match\detail;
 
 use lib\Auth;
 use model\UserModel;
-use db\user\match\MatchQuery;
+use model\profile\match\scoreModel;
+use db\profile\MatchQuery;
 
 function get() {
 
-    Auth::requireLogin();
+    $score = new ScoreModel;
+    $score->id = get_param('id', null, false);
 
-    $user = UserModel::getSession();
+    $fetchedScore = MatchQuery::fetchById($score);
 
-    $matchs = MatchQuery::fetchMatchs($user);
-
-    $users = MatchQuery::fetchUsers();
-
-    \view\user\detail\index($matchs, $users);
+    \view\profile\match\detail\index($fetchedScore);
 
 }
