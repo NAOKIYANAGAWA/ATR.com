@@ -1,6 +1,7 @@
 <?php
 
 require_once 'config.php';
+require_once 'staticList.php';
 
 // Library
 require_once SOURCE_BASE . 'libs/helper.php';
@@ -35,13 +36,13 @@ require_once SOURCE_BASE . 'views/login.php';
 require_once SOURCE_BASE . 'views/register.php';
 require_once SOURCE_BASE . 'views/profile.php';
 require_once SOURCE_BASE . 'views/profile/match.php';
+require_once SOURCE_BASE . 'views/profile/match/create.php';
 
 use function lib\route;
 
 session_start();
 
 try {
-
     \partials\header();
 
     $url = parse_url(CURRENT_URI);
@@ -50,10 +51,6 @@ try {
     route($rpath, $method);
 
     \partials\footer();
-
-} catch(Throwable $e) {
-
+} catch (Throwable $e) {
     die('<h1>エラーが発生しました管理者にお問い合わせください</h1>');
-
 }
-
