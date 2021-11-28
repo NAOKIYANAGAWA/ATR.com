@@ -1,11 +1,12 @@
-<?php 
+<?php
 namespace partials;
 
 use lib\Auth;
 use lib\Msg;
 
-function header() {
-?>
+function header()
+{
+    ?>
     <!DOCTYPE html>
     <html>
     <head>
@@ -26,8 +27,8 @@ function header() {
                         <span class="h2 font-weight-bold mb-0">ATR</span>
                     </a>
                     <div class="col-md-auto">
-                        <?php if(Auth::isLogin()) : ?>
-                            <a href="<?php echo '#'; ?>" class="btn btn-primary mr-2">投稿</a>
+                        <?php if (Auth::isLogin()) : ?>
+                            <a href="<?php the_url('profile/match/create'); ?>" class="btn btn-primary mr-2">試合登録</a>
                             <a href="<?php the_url('profile'); ?>" class="mr-2">マイページ</a>
                             <a href="<?php the_url('logout'); ?>">ログアウト</a>
                         <?php else: ?>

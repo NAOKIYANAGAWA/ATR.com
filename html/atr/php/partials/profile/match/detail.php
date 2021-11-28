@@ -2,28 +2,46 @@
 
 namespace partials\profile\match;
 
-function detail($score)
+function detail($matchs, $score)
 {
-?>
+    $game_point_user = [
+        $score->first_set_game_point_user,
+        $score->second_set_game_point_user,
+        $score->third_set_game_point_user,
+        $score->fourth_set_game_point_user,
+        $score->fifth_set_game_point_user
+    ];
 
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">試合詳細</h1>
+    $game_point_opponent = [
+        $score->first_set_game_point_opponent,
+        $score->second_set_game_point_opponent,
+        $score->third_set_game_point_opponent,
+        $score->fourth_set_game_point_opponent,
+        $score->fifth_set_game_point_opponent
+    ]; ?>
+
+    <div class="pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h3">試合詳細</h1>
     </div>
-    <div>
-        <h5 class="text-center">スコア</h5>
-        <h1 class="text-center">
-            <span class="mr-5">User1</span>
-            <?php echo $score->set_point_user ?>
-                -
-            <?php echo $score->set_point_opponent ?>
-            <span class="ml-5">User2</span>
-        </h1>
-        <p class="text-center"><?php echo $score->first_set_game_point_user ?> - <?php echo $score->first_set_game_point_opponent ?></p>
-        <p class="text-center"><?php echo $score->second_set_game_point_user ?> - <?php echo $score->second_set_game_point_opponent ?></p>
-        <p class="text-center"><?php echo $score->third_set_game_point_user ?> - <?php echo $score->third_set_game_point_opponent ?></p>
-        <p class="text-center"><?php echo $score->fourth_set_game_point_user ?> - <?php echo $score->fourth_set_game_point_opponent ?></p>
-        <p class="text-center"><?php echo $score->fifth_set_game_point_user ?> - <?php echo $score->fifth_set_game_point_opponent ?></p>
+    <div class="text-center mb-3"><span class="h3">スコア</span></div>
+    <div class="text-center mt-3"><span class="h5">TOTAL SET</span></div>
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="row col-3 m-0"><span class="text-center h3 m-0 w-100">User1</span></div>
+        <div class="row col-3 m-0"><span class="text-center h1 m-0 w-100"><?php echo $score->set_point_user ?></span></div>
+        <span class="h3">-</span>
+        <div class="row col-3 m-0"><span class="text-center h1 m-0 w-100"><?php echo $score->set_point_opponent ?></span></div>
+        <div class="row col-3 m-0"><span class="text-center h3 m-0 w-100">User1</span></div>
     </div>
+    <?php foreach ($matchs as $match) :?>
+        <?php if ($match->id === $score->match_id) :?>
+            <?php for ($i=0; $i < $match->match_type; $i++) :?>
+                <div class="text-center mt-3"><span class="h5"><?php echo $i+1; ?>st SET</span></div>
+                <div class="container d-flex justify-content-center align-items-center">
+                    <p class="text-center mb-0"><?php echo $game_point_user[$i] ?> - <?php echo $game_point_opponent[$i] ?></p>
+                </div>
+            <?php endfor; ?>
+        <?php endif; ?>
+    <?php endforeach; ?>
 
 <?php
 }
