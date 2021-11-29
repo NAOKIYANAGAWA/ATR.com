@@ -73,28 +73,14 @@ class MatchQuery
         return $result;
     }
 
-    public static function fetchById($score)
+    public static function fetchScoreByMatchId($score)
     {
-
-        // if (!$topic->isValidEmail()) {
-        //     return false;
-        // }
-
         $db = new DataSource;
         $sql = '
-        select * from scores where id = :id';
-        //     s.*, u.nickname
-        // from topics t
-        // inner join users u
-        //     on t.user_id = u.id
-        // where t.id = :id
-        //     and t.del_flg != 1
-        //     and u.del_flg != 1
-        // order by t.id desc
-        // ';
+        select * from scores where match_id = :match_id';
 
         $result = $db->selectOne($sql, [
-            ':id' => $score->id
+            ':match_id' => $score->match_id
         ], DataSource::CLS, ScoreModel::class);
 
         return $result;
@@ -168,5 +154,89 @@ class MatchQuery
                 'fifth_set_game_point_opponent' => $score->fifth_set_game_point_opponent,
             ]);
         }
+    }
+
+    public static function update($match, $score, $db)
+    {
+        $sql = 'update matches set
+                opponent_id = :opponent_id,
+                match_type = :match_type,
+                win_flg = :win_flg
+                where id = :id';
+
+        $is_success = $db->execute($sql, [
+            ':opponent_id' => $match->opponent_id,
+            ':match_type' => $match->match_type,
+            ':win_flg' => $match->win_flg,
+            ':id' => $match->id,
+        ]);
+
+        if ($is_success) {
+            $sql = 'update scores set
+                    set_point_user = :set_point_user,
+                    set_point_opponent = :set_point_opponent,
+                    first_set_game_point_user = :first_set_game_point_user,
+                    first_set_game_point_opponent = :first_set_game_point_opponent,
+                    second_set_game_point_user = :second_set_game_point_user,
+                    second_set_game_point_opponent = :second_set_game_point_opponent,
+                    third_set_game_point_user = :third_set_game_point_user,
+                    third_set_game_point_opponent = :third_set_game_point_opponent,
+                    fourth_set_game_point_user = :fourth_set_game_point_user,
+                    fourth_set_game_point_opponent = :fourth_set_game_point_opponent,
+                    fifth_set_game_point_user = :fifth_set_game_point_user,
+                    fifth_set_game_point_opponent = :fifth_set_game_point_opponent
+                    where match_id = :match_id';
+
+            return $db->execute($sql, [
+                ':set_point_user' => $score->set_point_user,
+                ':set_point_opponent' => $score->set_point_opponent,
+                ':first_set_game_point_user' => $score->first_set_game_point_user,
+                ':first_set_game_point_opponent' => $score->first_set_game_point_opponent,
+                ':second_set_game_point_user' => $score->second_set_game_point_user,
+                ':second_set_game_point_opponent' => $score->second_set_game_point_opponent,
+                ':third_set_game_point_user' => $score->third_set_game_point_user,
+                ':third_set_game_point_opponent' => $score->third_set_game_point_opponent,
+                ':fourth_set_game_point_user' => $score->fourth_set_game_point_user,
+                ':fourth_set_game_point_opponent' => $score->fourth_set_game_point_opponent,
+                ':fifth_set_game_point_user' => $score->fifth_set_game_point_user,
+                ':fifth_set_game_point_opponent' => $score->fifth_set_game_point_opponent,
+                ':match_id' => $score->match_id,
+            ]);
+        }
+    }
+
+    public static function logical_delete($match_id, $db)
+    {
+        $sql = 'update matches set
+        del_flg = 1
+        where id = :id';
+
+        $is_success = $db->execute($sql, [':id' => $match_id,]);
+
+        if ($is_success) {
+            $sql = 'update scores set
+            del_flg = 1
+            where match_id = :match_id';
+
+            return $db->execute($sql, [':match_id' => $match_id,]);
+        }
+    }
+
+    public static function fetchByMatchId($match)
+    {
+        //todo
+        // if (!$match->isValidId()) {
+        //     return false;
+        // }
+
+        $db = new DataSource;
+        $sql = '
+        select * from matches where id = :id';
+
+        $result = $db->selectOne($sql, [
+            ':id' => $match->id
+        ], DataSource::CLS, MatchModel::class);
+
+        return $result;
     }
 }

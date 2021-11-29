@@ -36,7 +36,8 @@ require_once SOURCE_BASE . 'views/login.php';
 require_once SOURCE_BASE . 'views/register.php';
 require_once SOURCE_BASE . 'views/profile.php';
 require_once SOURCE_BASE . 'views/profile/match.php';
-require_once SOURCE_BASE . 'views/profile/match/create.php';
+require_once SOURCE_BASE . 'views/profile/match/edit.php';
+require_once SOURCE_BASE . 'views/profile/match/delete.php';
 
 use function lib\route;
 

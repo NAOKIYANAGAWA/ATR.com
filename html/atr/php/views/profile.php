@@ -1,8 +1,9 @@
 <?php
 namespace view\profile;
 
-function index() {
-?>
+function index()
+{
+    ?>
 
     <div class="container-fluid">
         <div class="row">
@@ -16,23 +17,23 @@ function index() {
             <div class="container">
                 <div class="row justify-content-center">
                     <img class="rounded-circle" width="100" src="<?php echo BASE_IMAGE_PATH; ?>logo.jpg" alt="">
-                    <span class="d-block">NAOKI</span>
                 </div>
-                <div class="container">
-                    <div class="row col-4 m-0">
-                        <div class="">
-                            <h5>戦績</h5>
-                            <span>89勝34敗</span>
+                <div class="row justify-content-center">
+                    <span class="mt-1 h3">NAOKI</span>
+                </div>
+                <div class="container d-flex mt-3">
+                        <div class="justify-content-center d-block row col-4 m-0 ">
+                            <h5 class="text-center">戦績</h5>
+                            <span class="text-center d-block w-100">89勝34敗</span>
                         </div>
-                        <div class="">
-                            <h5>ポイント</h5>
-                            <span>4870pt</span>
+                        <div class="justify-content-center d-block row col-4 m-0">
+                            <h5 class="text-center">ポイント</h5 >
+                            <span class="text-center d-block w-100">4870pt</span>
                         </div>
-                        <div class="">
-                            <h5>レベル</h5>
-                            <span>中級</span>
+                        <div class="justify-content-center d-block row col-4 m-0">
+                            <h5 class="text-center">レベル</h5>
+                            <span class="text-center d-block w-100">中級</span>
                         </div>
-                    </div>
                 </div>
             </div>
 

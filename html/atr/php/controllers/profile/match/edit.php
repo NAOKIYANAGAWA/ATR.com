@@ -1,5 +1,5 @@
 <?php
-namespace controller\profile\match\create;
+namespace controller\profile\match\edit;
 
 use lib\Auth;
 use lib\Msg;
@@ -17,32 +17,22 @@ function get()
     $match = MatchModel::getSessionAndFlush();
     $score = ScoreModel::getSessionAndFlush();
 
-    if (empty($match)) {
-        $match = new MatchQuery;
-        $match->id = -1;
-        $match->opponent_id = 0;
-        $match->match_type = 0;
-        $match->win_flg = 0;
+    if (!empty($match)) {
+        \view\profile\match\edit\index($match, $score, true);
+        return;
     }
 
-    if (empty($score)) {
-        $score = new ScoreModel;
-        $score->match_id = 0;
-        $score->set_point_user = 0;
-        $score->set_point_opponent = 0;
-        $score->first_set_game_point_user = 0;
-        $score->first_set_game_point_opponent = 0;
-        $score->second_set_game_point_user = 0;
-        $score->second_set_game_point_opponent = 0;
-        $score->third_set_game_point_user = 0;
-        $score->third_set_game_point_opponent = 0;
-        $score->fourth_set_game_point_user = 0;
-        $score->fourth_set_game_point_opponent = 0;
-        $score->fifth_set_game_point_user = 0;
-        $score->fifth_set_game_point_opponent = 0;
-    }
+    $match = new MatchModel;
+    $match->id = get_param('match_id', null, false);
 
-    \view\profile\match\edit\index($match, $score, false);
+    $fetchedMatch = MatchQuery::fetchByMatchId($match);
+
+    $score = new ScoreModel;
+    $score->match_id = get_param('match_id', null, false);
+
+    $fetchedScore = MatchQuery::fetchScoreByMatchId($score);
+
+    \view\profile\match\edit\index($fetchedMatch, $fetchedScore, false);
 }
 
 function post()
@@ -71,13 +61,11 @@ function post()
     $score->fifth_set_game_point_opponent = get_param('fifth_set_game_point_opponent', null);
 
     try {
-        $user = UserModel::getSession();
-
         $db = new DataSource;
 
         $db->begin();
 
-        $is_success = MatchQuery::insert($match, $score, $user, $db);
+        $is_success = MatchQuery::update($match, $score, $db);
     } catch (Throwable $e) {
         Msg::push(Msg::DEBUG, $e->getMessage());
         $is_success = false;
