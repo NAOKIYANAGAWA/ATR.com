@@ -24,6 +24,25 @@ class MatchQuery
         return $result;
     }
 
+    public static function fetchAll()
+    {
+        $db = new DataSource;
+        $sql = 'select * from matches;';
+
+        $result = $db->select($sql, [], DataSource::CLS, MatchModel::class);
+
+        return $result;
+    }
+
+    public static function fetchDistinctUsers()
+    {
+        $db = new DataSource;
+        $sql = 'select distinct id, nickname from users;';
+
+        $result = $db->select($sql, [], DataSource::CLS, MatchModel::class);
+
+        return $result;
+    }
 
     public static function fetchMatchs($user)
     {
@@ -98,10 +117,31 @@ class MatchQuery
         }
 
         // $db = new DataSource;
-        $sql = 'insert into matches(opponent_id, match_type, win_flg, user_id) values (:opponent_id, :match_type, :win_flg, :user_id)';
+        $sql = 'insert into matches(
+                    opponent_id,
+                    prefecture_id,
+                    city,
+                    venue,
+                    match_date,
+                    match_type,
+                    win_flg, user_id
+                ) values (
+                    :opponent_id,
+                    :prefecture_id,
+                    :city,
+                    :venue,
+                    :match_date,
+                    :match_type,
+                    :win_flg,
+                    :user_id
+                )';
 
         $is_success = $db->execute($sql, [
             ':opponent_id' => $match->opponent_id,
+            ':prefecture_id' => $match->prefecture_id,
+            ':city' => $match->city,
+            ':venue' => $match->venue,
+            ':match_date' => $match->match_date,
             ':match_type' => $match->match_type,
             ':win_flg' => $match->win_flg,
             ':user_id' => $user->id,
@@ -109,34 +149,34 @@ class MatchQuery
 
         if ($is_success) {
             $sql = 'insert into scores(
-                    match_id,
-                    set_point_user,
-                    set_point_opponent,
-                    first_set_game_point_user,
-                    first_set_game_point_opponent,
-                    second_set_game_point_user,
-                    second_set_game_point_opponent,
-                    third_set_game_point_user,
-                    third_set_game_point_opponent,
-                    fourth_set_game_point_user,
-                    fourth_set_game_point_opponent,
-                    fifth_set_game_point_user,
-                    fifth_set_game_point_opponent
-                ) values (
-                    :match_id,
-                    :set_point_user,
-                    :set_point_opponent,
-                    :first_set_game_point_user,
-                    :first_set_game_point_opponent,
-                    :second_set_game_point_user,
-                    :second_set_game_point_opponent,
-                    :third_set_game_point_user,
-                    :third_set_game_point_opponent,
-                    :fourth_set_game_point_user,
-                    :fourth_set_game_point_opponent,
-                    :fifth_set_game_point_user,
-                    :fifth_set_game_point_opponent
-                )';
+                        match_id,
+                        set_point_user,
+                        set_point_opponent,
+                        first_set_game_point_user,
+                        first_set_game_point_opponent,
+                        second_set_game_point_user,
+                        second_set_game_point_opponent,
+                        third_set_game_point_user,
+                        third_set_game_point_opponent,
+                        fourth_set_game_point_user,
+                        fourth_set_game_point_opponent,
+                        fifth_set_game_point_user,
+                        fifth_set_game_point_opponent
+                    ) values (
+                        :match_id,
+                        :set_point_user,
+                        :set_point_opponent,
+                        :first_set_game_point_user,
+                        :first_set_game_point_opponent,
+                        :second_set_game_point_user,
+                        :second_set_game_point_opponent,
+                        :third_set_game_point_user,
+                        :third_set_game_point_opponent,
+                        :fourth_set_game_point_user,
+                        :fourth_set_game_point_opponent,
+                        :fifth_set_game_point_user,
+                        :fifth_set_game_point_opponent
+                    )';
 
             return $db->execute($sql, [
                 'match_id' => $db->get_lastInsertId(),
@@ -160,12 +200,20 @@ class MatchQuery
     {
         $sql = 'update matches set
                 opponent_id = :opponent_id,
+                prefecture_id = :prefecture_id,
+                city = :city,
+                venue = :venue,
+                match_date = :match_date,
                 match_type = :match_type,
                 win_flg = :win_flg
                 where id = :id';
 
         $is_success = $db->execute($sql, [
             ':opponent_id' => $match->opponent_id,
+            ':prefecture_id' => $match->prefecture_id,
+            ':city' => $match->city,
+            ':venue' => $match->venue,
+            ':match_date' => $match->match_date,
             ':match_type' => $match->match_type,
             ':win_flg' => $match->win_flg,
             ':id' => $match->id,

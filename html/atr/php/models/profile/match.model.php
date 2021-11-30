@@ -13,7 +13,7 @@ class MatchModel extends AbstractModel
     public int $prefecture_id;
     public string $city;
     public string $venue;
-    public string $date;
+    public string $match_date;
     public int $match_type;
     public int $win_flg;
     public int $del_flg;

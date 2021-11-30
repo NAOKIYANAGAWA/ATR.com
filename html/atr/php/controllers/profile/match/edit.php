@@ -32,7 +32,7 @@ function get()
 
     $fetchedScore = MatchQuery::fetchScoreByMatchId($score);
 
-    \view\profile\match\edit\index($fetchedMatch, $fetchedScore, false);
+    \view\profile\match\edit\index($fetchedMatch, $fetchedScore, true);
 }
 
 function post()
@@ -42,6 +42,10 @@ function post()
     $match = new MatchModel;
     $match->id = get_param('id', null);
     $match->opponent_id = get_param('opponent_id', null);
+    $match->prefecture_id = get_param('prefecture_id', null);
+    $match->city = get_param('city', null);
+    $match->venue = get_param('venue', null);
+    $match->match_date = date('Y-m-d', strtotime(get_param('match_date', null)));
     $match->match_type = get_param('match_type', null);
     $match->win_flg = get_param('win_flg', null);
 

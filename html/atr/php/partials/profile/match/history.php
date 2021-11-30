@@ -26,7 +26,7 @@ function history($matchs, $users, $scores)
             <?php foreach ($matchs as $match) : ?>
                 <tr>
                     <td><?php echo $match->id ?></td>
-                    <td><?php echo $match->date ?></td>
+                    <td><?php echo date('Y-m-d', strtotime($match->match_date)); ?></td>
                         <?php foreach ($users as $user) : ?>
                             <?php if ($match->opponent_id === $user['id']):?>
                                 <td><?php echo $user['nickname'] ?></td>
