@@ -1,13 +1,21 @@
-<?php 
+<?php
 namespace controller\profile;
 
 use lib\Auth;
 use model\UserModel;
+use db\profile\MatchQuery;
 
-function get() {
-
+function get()
+{
     Auth::requireLogin();
 
-    \view\profile\index();
+    $user = UserModel::getSession();
 
+    $matchs = MatchQuery::fetchMatchs($user);
+
+    $result = get_match_data($matchs);
+
+    $points = count_points($matchs);
+
+    \view\profile\index($user, $matchs, $result, $points);
 }

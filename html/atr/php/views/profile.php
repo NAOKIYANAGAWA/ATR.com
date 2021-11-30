@@ -1,7 +1,7 @@
 <?php
 namespace view\profile;
 
-function index()
+function index($user, $matchs, $result, $points)
 {
     ?>
 
@@ -19,16 +19,16 @@ function index()
                     <img class="rounded-circle" width="100" src="<?php echo BASE_IMAGE_PATH; ?>logo.jpg" alt="">
                 </div>
                 <div class="row justify-content-center">
-                    <span class="mt-1 h3">NAOKI</span>
+                    <span class="mt-1 h3"><?php echo $user->nickname ?></span>
                 </div>
                 <div class="container d-flex mt-3">
                         <div class="justify-content-center d-block row col-4 m-0 ">
                             <h5 class="text-center">戦績</h5>
-                            <span class="text-center d-block w-100">89勝34敗</span>
+                            <span class="text-center d-block w-100"><?php echo $result['wins'] ?>勝<?php echo $result['loses'] ?>敗</span>
                         </div>
                         <div class="justify-content-center d-block row col-4 m-0">
                             <h5 class="text-center">ポイント</h5 >
-                            <span class="text-center d-block w-100">4870pt</span>
+                            <span class="text-center d-block w-100"><?php echo $points ?>pt</span>
                         </div>
                         <div class="justify-content-center d-block row col-4 m-0">
                             <h5 class="text-center">レベル</h5>
