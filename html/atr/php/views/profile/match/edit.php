@@ -10,11 +10,13 @@ function index($match, $score, $is_edit)
 
     <div class="bg-white p-4 shadow-sm mx-auto rounded">
         <form class="validate-form" action="<?php echo CURRENT_URI; ?>" method="POST" novalidate autocomplete="off">
+            <div class="pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h3">基本情報</h1>
+            </div>
             <input type="hidden" name="id" value="<?php echo $match->id; ?>">
             <div class="form-group">
                 <label for="opponent_id">対戦相手</label>
                 <input type="text" id="opponent_id" name="opponent_id" value="<?php echo $match->opponent_id; ?>" class="form-control validate-target" required autofocus>
-                <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
                 <label for="match_type">試合形式</label>
@@ -39,6 +41,13 @@ function index($match, $score, $is_edit)
                         <?php endif ?>
                     <?php endforeach; ?>
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label for="match_date">試合日</label>
+                <div>
+                    <input id="sandbox-container" type="text" class="form-control" name="match_date" value="<?php echo date('Y/m/d', strtotime($match->match_date)); ?>">
+                </div>
             </div>
 
             <div class="pt-3 pb-2 mb-3 border-bottom">
@@ -221,7 +230,37 @@ function index($match, $score, $is_edit)
                 </div>
             </div>
 
-            <div class="d-flex align-items-center">
+            <div class="pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h3">開催地詳細</h1>
+            </div>
+            <div class="mt-5">
+                <div class="form-group">
+                    <label for="venue">施設名</label>
+                    <div container d-flex mt-5>
+                        <input id="venue" class="form-control" type="text" name="venue" value="<?php echo $match->venue; ?>">
+                        <input type="button" class="btn btn-primary shadow-sm mt-3" value="検索" onclick="codeAddress()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="prefecture_id">都道府県</label>
+                    <select name="prefecture_id" id="prefecture_id" class="form-control">
+                        <?php foreach (StaticList::$prefecture as $key=>$value): ?>
+                            <?php if ($match->prefecture_id === $key) :?>
+                                <option value="<?php echo $key ?>" selected><?php echo $value ?></option>
+                            <?php else: ?>
+                                <option value="<?php echo $key ?>"><?php echo $value ?></option>
+                            <?php endif ?>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="city">市区町村</label>
+                    <input id="city" type="text" name="city" value="<?php echo $match->city; ?>" class="form-control">
+                </div>
+                <div id="map" class="w-100" style="height: 600px;"></div>
+            </div>
+
+            <div class="d-flex align-items-center mt-5">
                 <div>
                     <input type="submit" value="送信" class="btn btn-primary shadow-sm mr-3">
                 </div>
