@@ -1,7 +1,8 @@
 <?php
 namespace view\top;
 
-function index() {
+function index($rank_info)
+{
     ?>
 
     <div class="text-center my-5">
@@ -13,36 +14,22 @@ function index() {
             <thead>
                 <tr>
                     <th	scope="col">#</th>
-                    <th	scope="col">UserName</th>
-                    <th	scope="col">Wins</th>
-                    <th	scope="col">Points</th>
+                    <th	scope="col">プレーヤー名</th>
+                    <th	scope="col">勝利数</th>
+                    <th	scope="col">ポイント</th>
                 </tr>
             </thead>
             <tbody>
+                <?php foreach ($rank_info as $key=>$value): ?>
                 <tr>
-                    <th	scope="row">1</th>
+                    <th	scope="row"><?php echo $key+1; ?></th>
                     <td>
-                        <a href="" class="">Ted</a>
+                        <a href="<?php the_url('profile/match?user_id='); ?><?php echo $value['user_id']; ?>"><?php echo $value['nickname']; ?></a>
                     </td>
-                    <td>125</td>
-                    <td><?php echo 125*10;?></td>
+                    <td><?php echo $value['wins']; ?></td>
+                    <td><?php echo $value['points']; ?></td>
                 </tr>
-                <tr>
-                    <th	scope="row">2</th>
-                    <td>
-                        <a href="" class=""> Tommy</a>
-                    </td>
-                    <td>94</td>
-                    <td><?php echo 94*10;?></td>
-                </tr>
-                <tr>
-                    <th	scope="row">3</th>
-                    <td>
-                        <a href="" class="">Chris</a>
-                    </td>
-                    <td>88</td>
-                    <td><?php echo 88*10;?></td>
-                </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
