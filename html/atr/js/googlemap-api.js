@@ -30,25 +30,22 @@ function codeAddress(){
                 if (results[0].address_components[i].types[0] === 'locality') {
                     city_name = results[0].address_components[i].long_name;
                 }
-                    if (results[0].address_components[i].types[0] === 'country') {
-                        if (results[0].address_components[i].long_name === '日本') {
-                            map.setCenter(results[0].geometry.location);
-                            marker = new google.maps.Marker({
-                                position: results[0].geometry.location,
-                                map: map,
-                            });
-                            console.log(results[0].address_components[i].long_name);
-                            city.value = city_name;
-                        }
+                if (results[0].address_components[i].types[0] === 'country') {
+                    if (results[0].address_components[i].long_name === '日本') {
+                        map.setCenter(results[0].geometry.location);
+                        marker = new google.maps.Marker({
+                            position: results[0].geometry.location,
+                            map: map,
+                        });
+                        city.value = city_name;
                     }
+                }
             }
-            console.log(results[0]);
         }
     });
 }
 
 const $input = document.querySelector('#venue');
 $input.addEventListener('input', function () {
-
     codeAddress();
 });
