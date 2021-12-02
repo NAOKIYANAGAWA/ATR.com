@@ -12,6 +12,16 @@ use model\profile\match\scoreModel;
 
 function get()
 {
+    //ajaxリスポンス
+    $opponent_id = get_param('opponent_id', null, false);
+    if ($opponent_id) {
+        $opponents = MatchQuery::fetchAllOpponent($opponent_id);
+        foreach ($opponents as $opponent) {
+            echo 'opponent_id:' . $opponent->nickname .'<br>';
+        }
+        return;
+    }
+
     Auth::requireLogin();
 
     $match = MatchModel::getSessionAndFlush();
@@ -20,7 +30,6 @@ function get()
     if (empty($match)) {
         $match = new MatchQuery;
         $match->id = -1;
-        $match->opponent_id = 0;
         $match->match_date = date('Y-m-d');
         $match->match_type = 0;
         $match->win_flg = 0;
@@ -50,9 +59,11 @@ function post()
 {
     Auth::requireLogin();
 
+    $opponent_id = MatchQuery::fetchOpponentIdByOpponentName(get_param('opponent_id', null));
+
     $match = new MatchModel;
     $match->id = get_param('id', null);
-    $match->opponent_id = get_param('opponent_id', null);
+    $match->opponent_id = $opponent_id->id;
     $match->prefecture_id = get_param('prefecture_id', null);
     $match->city = get_param('city', null);
     $match->venue = get_param('venue', null);

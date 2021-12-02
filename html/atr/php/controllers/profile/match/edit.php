@@ -24,8 +24,14 @@ function get()
 
     $match = new MatchModel;
     $match->id = get_param('match_id', null, false);
+    $user = UserModel::getSession();
+    Auth::requirePermission($match->id, $user);
+
+    $match = new MatchModel;
+    $match->id = get_param('match_id', null, false);
 
     $fetchedMatch = MatchQuery::fetchByMatchId($match);
+    $fetchedMatch->opponent_id = MatchQuery::fetchOpponentNameByOpponentId($fetchedMatch->opponent_id)->nickname;
 
     $score = new ScoreModel;
     $score->match_id = get_param('match_id', null, false);
@@ -39,9 +45,11 @@ function post()
 {
     Auth::requireLogin();
 
+    $opponent_id = MatchQuery::fetchOpponentIdByOpponentName(get_param('opponent_id', null));
+
     $match = new MatchModel;
     $match->id = get_param('id', null);
-    $match->opponent_id = get_param('opponent_id', null);
+    $match->opponent_id = $opponent_id->id;
     $match->prefecture_id = get_param('prefecture_id', null);
     $match->city = get_param('city', null);
     $match->venue = get_param('venue', null);

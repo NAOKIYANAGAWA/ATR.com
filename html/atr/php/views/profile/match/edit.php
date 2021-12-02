@@ -15,11 +15,17 @@ function index($match, $score, $is_edit)
             </div>
             <input type="hidden" name="id" value="<?php echo $match->id; ?>">
             <div class="form-group">
-                <label for="opponent_id">対戦相手</label>
-                <input type="text" id="opponent_id" name="opponent_id" value="<?php echo $match->opponent_id; ?>" class="form-control validate-target" required autofocus>
+                <span class="text-danger">*</span><label for="opponent_id">対戦相手</label>
+                <input type="text" id="opponent_id" name="opponent_id" value="<?php echo $match->opponent_id; ?>" class="form-control" placeholder="ユーザー名を入力" autofocus>
+                <div class="valid-feedback">
+                    対戦相手が見つかりました
+                </div>
+                <div class="invalid-feedback">
+                    対戦相手が見つかりません
+                </div>
             </div>
             <div class="form-group">
-                <label for="match_type">試合形式</label>
+            <span class="text-danger">*</span><label for="match_type">試合形式</label>
                 <select name="match_type" id="match_type" class="form-control">
                     <?php foreach (StaticList::$match_type as $key=>$value): ?>
                         <?php if ($match->match_type === $key) :?>
