@@ -40,4 +40,59 @@ class MatchModel extends AbstractModel
 
         return $res;
     }
+
+    public function isValidId()
+    {
+        return static::validateId($this->match_id);
+    }
+
+    public static function validateId($val)
+    {
+        $res = true;
+
+        if (empty($val) || !is_numeric($val)) {
+            Msg::push(Msg::ERROR, 'パラメータが不正です。');
+            $res = false;
+        }
+
+        return $res;
+    }
+
+    public static function get_wins_and_lose($matchs)
+    {
+        $result = [
+        'wins' => 0,
+        'loses' => 0,
+    ];
+        foreach ($matchs as $match) {
+            if ($match->win_flg === 1) {
+                $result['wins']++;
+            } else {
+                $result['loses']++;
+            }
+        }
+        return $result;
+    }
+
+    public static function count_points($matchs)
+    {
+        $points = 0;
+        foreach ($matchs as $match) {
+            if ($match->win_flg === 1) {
+                switch ($match->match_type) {
+            case 1:
+                $points += 10;
+                break;
+            case 3:
+                $points += 30;
+                break;
+            case 5:
+                $points += 50;
+                break;
+            };
+            }
+        }
+
+        return $points;
+    }
 }
