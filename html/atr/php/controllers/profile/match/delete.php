@@ -13,7 +13,12 @@ function get()
 {
     Auth::requireLogin();
 
+    $param = get_param('action', null, false);
     $match_id = get_param('match_id', null, false);
+    if ($param != 'delete') {
+        \view\profile\match\delete\index($match_id);
+        return;
+    }
 
     try {
         $db = new DataSource;
