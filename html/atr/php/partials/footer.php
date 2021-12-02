@@ -15,7 +15,6 @@ function footer()
         <script src="<?php echo BASE_JS_PATH ?>vendor/chart.js"></script>
         <script src="<?php echo BASE_JS_PATH ?>pie-chart.js"></script>
         <script src="<?php echo BASE_JS_PATH ?>form-validate.js"></script>
-        <script src="<?php echo BASE_JS_PATH ?>confirmation-msg.js"></script>
         <script src="<?php echo BASE_JS_PATH ?>ajax.js"></script>
         <script src="<?php echo BASE_JS_PATH ?>googlemap-api.js"></script>
         <script src="<?php echo BASE_JS_PATH ?>datepicker.js"></script>

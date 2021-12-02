@@ -3,6 +3,7 @@ namespace partials;
 
 use lib\Auth;
 use lib\Msg;
+use model\UserModel;
 
 function header()
 {
@@ -13,7 +14,7 @@ function header()
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ATR</title>
+        <title>アマテニ</title>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="//fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo BASE_CSS_PATH; ?>style.css">
@@ -28,13 +29,16 @@ function header()
             <header class="container my-2">
                 <nav class="row align-items-center py-2">
                     <a href="<?php the_url('/'); ?>" class="col-md d-flex align-items-center mb-3 mb-md-0">
-                        <img width="50" class="mr-2" src="<?php echo BASE_IMAGE_PATH; ?>logo.jpg" alt="サイトロゴ">
-                        <span class="h2 font-weight-bold mb-0">ATR</span>
+                        <img width="50" class="mr-2" src="<?php echo BASE_IMAGE_PATH; ?>logo.png" alt="サイトロゴ">
+                        <div class="ml-3">
+                            <span class="d-block w-100 m-0 h2">アマテニ</span>
+                            <span class="text-center d-block w-100">週末テニスプレイヤーランキング</span>
+                        </div>
                     </a>
                     <div class="col-md-auto">
                         <?php if (Auth::isLogin()) : ?>
                             <a href="<?php the_url('profile/match/create'); ?>" class="btn btn-primary mr-2">試合登録</a>
-                            <a href="<?php the_url('profile'); ?>" class="mr-2">マイページ</a>
+                            <a href="<?php the_url('profile?user_id='); ?><?php echo UserModel::getSession()->id; ?>" class="mr-2">マイページ</a>
                             <a href="<?php the_url('logout'); ?>">ログアウト</a>
                         <?php else: ?>
                             <a href="<?php the_url('register'); ?>" class="btn btn-primary mr-2">登録</a>

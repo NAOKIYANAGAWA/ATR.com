@@ -2,7 +2,6 @@
 namespace controller\top;
 
 use db\profile\MatchQuery;
-use model\profile\MatchModel;
 
 function get()
 {

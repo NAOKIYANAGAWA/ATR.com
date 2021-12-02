@@ -1,22 +1,24 @@
 <?php
 namespace view\profile;
 
-function index($user, $matchs, $result, $points)
+function index($user, $result, $points, $user_id)
 {
     ?>
 
     <div class="container-fluid">
         <div class="row">
 
-            <?php \partials\profile\side_menu(); ?>
+            <?php \partials\profile\side_menu($user_id); ?>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-            <h1>プロフィール</h1>
+            <div class="pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h3">プロフィール</h1>
+            </div>
 
             <div class="container">
                 <div class="row justify-content-center">
-                    <img class="rounded-circle" width="100" src="<?php echo BASE_IMAGE_PATH; ?>logo.jpg" alt="">
+                    <img class="rounded-circle" width="100" src="<?php echo BASE_IMAGE_PATH; ?>profile.png" alt="">
                 </div>
                 <div class="row justify-content-center">
                     <span class="mt-1 h3"><?php echo $user->nickname ?></span>
