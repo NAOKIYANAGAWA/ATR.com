@@ -4,10 +4,33 @@ namespace db\profile;
 
 use db\DataSource;
 use model\profile\MatchModel;
+use model\UserModel;
 use model\profile\match\ScoreModel;
 
 class MatchQuery
 {
+    public static function isYourOwnMatch($topic_id, $user)
+    {
+        // if (!(MatchModel::validateId($topic_id) && $user->isValidEmail())) {
+        //     return false;
+        // }
+
+        $db = new DataSource;
+        $sql = '
+        select count(1) from pollapp.topics t
+        where t.id = :topic_id
+            and t.user_id = :user_id
+            and t.del_flg != 1;
+        ';
+
+        $result = $db->selectOne($sql, [
+            ':topic_id' => $topic_id,
+            ':user_id' => $user->id,
+        ]);
+
+        return $result;
+    }
+
     public static function fetchByUserId($user)
     {
         if (!$user->isValidEmail()) {
@@ -44,7 +67,7 @@ class MatchQuery
         return $result;
     }
 
-    public static function fetchMatchs($user)
+    public static function joinUsers($user_id)
     {
         $db = new DataSource;
         $sql = '
@@ -59,12 +82,12 @@ class MatchQuery
         order by m.user_id asc
         ';
 
-        $result = $db->select($sql, [':id' => $user->id], DataSource::CLS, MatchModel::class);
+        $result = $db->select($sql, [':id' => $user_id], DataSource::CLS, MatchModel::class);
 
         return $result;
     }
 
-    public static function fetchUsers()
+    public static function fetchAllUsers()
     {
         $db = new DataSource;
         $sql = 'select id, nickname from users';
@@ -74,7 +97,7 @@ class MatchQuery
         return $result;
     }
 
-    public static function fetchScores($matchs)
+    public static function fetchAllScores($matchs)
     {
         $db = new DataSource;
         $sql = 'select * from scores';
@@ -88,6 +111,19 @@ class MatchQuery
                 }
             }
         }
+
+        return $result;
+    }
+
+    public static function fetchMostRecentMatchByUserId($user_id)
+    {
+        $db = new DataSource;
+        $sql = '
+        select id from matches where user_id = :user_id order by match_date desc';
+
+        $result = $db->selectOne($sql, [
+            ':user_id' => $user_id
+        ], DataSource::CLS, ScoreModel::class);
 
         return $result;
     }
@@ -284,6 +320,65 @@ class MatchQuery
         $result = $db->selectOne($sql, [
             ':id' => $match->id
         ], DataSource::CLS, MatchModel::class);
+
+        return $result;
+    }
+
+    public static function isYourMatch($match_id, $user)
+    {
+        if (!(MatchModel::validateId($match_id))) {
+            return false;
+        }
+
+        $db = new DataSource;
+        $sql = '
+        select * from matches m
+        where m.id = :match_id
+            and m.user_id = :user_id
+            and m.del_flg != 1;
+        ';
+
+        $result = $db->selectOne($sql, [
+            ':match_id' => $match_id,
+            ':user_id' => $user->id,
+        ]);
+
+        return $result;
+    }
+
+    public static function fetchAllOpponent($opponent_id)
+    {
+        $db = new DataSource;
+        $sql = 'select * from users where id = :id or nickname = :nickname order by nickname desc;';
+
+        $result = $db->select($sql, [
+            ':id' => $opponent_id,
+            ':nickname' => $opponent_id
+        ], DataSource::CLS, UserModel::class);
+
+        return $result;
+    }
+
+    public static function fetchOpponentIdByOpponentName($opponent_name)
+    {
+        $db = new DataSource;
+        $sql = 'select id from users where nickname = :nickname;';
+
+        $result = $db->selectOne($sql, [
+            ':nickname' => $opponent_name
+        ], DataSource::CLS, UserModel::class);
+
+        return $result;
+    }
+
+    public static function fetchOpponentNameByOpponentId($opponent_id)
+    {
+        $db = new DataSource;
+        $sql = 'select nickname from users where id = :id;';
+
+        $result = $db->selectOne($sql, [
+            ':id' => $opponent_id
+        ], DataSource::CLS, UserModel::class);
 
         return $result;
     }

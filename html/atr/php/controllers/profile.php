@@ -3,6 +3,8 @@ namespace controller\profile;
 
 use lib\Auth;
 use model\UserModel;
+use db\UserQuery;
+use model\profile\MatchModel;
 use db\profile\MatchQuery;
 
 function get()
@@ -11,11 +13,18 @@ function get()
 
     $user = UserModel::getSession();
 
-    $matchs = MatchQuery::fetchMatchs($user);
+    if (get_param('user_id', null, false)) {
+        $user_id = get_param('user_id', null, false);
+        $user = UserQuery::fetchById($user_id);
+    } else {
+        $user_id = $user->id;
+    }
 
-    $result = get_match_data($matchs);
+    $matchs = MatchQuery::joinUsers($user_id);
 
-    $points = count_points($matchs);
+    $result = MatchModel::get_wins_and_lose($matchs);
 
-    \view\profile\index($user, $matchs, $result, $points);
+    $points = MatchModel::count_points($matchs);
+
+    \view\profile\index($user, $result, $points, $user_id);
 }
