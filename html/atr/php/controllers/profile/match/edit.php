@@ -38,7 +38,7 @@ function get()
 
     $fetchedScore = MatchQuery::fetchScoreByMatchId($score);
 
-    \view\profile\match\edit\index($fetchedMatch, $fetchedScore, true);
+    \view\profile\match\edit\index($fetchedMatch, $fetchedScore, $user, true);
 }
 
 function post()

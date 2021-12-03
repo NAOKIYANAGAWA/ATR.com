@@ -23,6 +23,7 @@ function get()
     }
 
     Auth::requireLogin();
+    $user = UserModel::getSession();
 
     $match = MatchModel::getSessionAndFlush();
     $score = ScoreModel::getSessionAndFlush();
@@ -52,7 +53,7 @@ function get()
         $score->fifth_set_game_point_opponent = 0;
     }
 
-    \view\profile\match\edit\index($match, $score, false);
+    \view\profile\match\edit\index($match, $score, $user, false);
 }
 
 function post()
