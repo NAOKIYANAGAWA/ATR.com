@@ -3,9 +3,10 @@ namespace view\profile\match\edit;
 
 use staticList;
 
-function index($match, $score, $is_edit)
+function index($match, $score, $user, $is_edit)
 {
-    $header_title = $is_edit ? '試合編集' : '試合登録'; ?>
+    $header_title = $is_edit ? '試合編集' : '試合登録';
+    $opponent_name = $is_edit ? $match->opponent_id : '対戦相手'; ?>
     <h1 class="h2 mb-3"><?php echo $header_title ?></h1>
 
     <div class="bg-white p-4 shadow-sm mx-auto rounded">
@@ -16,7 +17,7 @@ function index($match, $score, $is_edit)
             <input type="hidden" name="id" value="<?php echo $match->id; ?>">
             <div class="form-group">
                 <span class="text-danger">*</span><label for="opponent_id">対戦相手</label>
-                <input type="text" id="opponent_id" name="opponent_id" value="<?php echo $match->opponent_id; ?>" class="form-control" placeholder="ユーザー名を入力" autofocus>
+                <input type="text" id="opponent_id" name="opponent_id" value="<?php echo $match->opponent_id; ?>" class="form-control" placeholder="対戦相手のユーザー名を入力" autofocus>
                 <div class="valid-feedback">
                     対戦相手が見つかりました
                 </div>
@@ -62,7 +63,7 @@ function index($match, $score, $is_edit)
             <div class="text-center mb-3"><span class="h3">スコア</span></div>
             <div class="text-center mt-3"><span class="h5">TOTAL SET</span></div>
             <div class="container d-flex justify-content-center align-items-center">
-                <div class="row col-3 m-0"><span class="text-center h3 m-0 w-100">User1</span></div>
+                <div class="row col-3 m-0"><span class="text-center h3 m-0 w-100"><?php echo $user->nickname; ?></span></div>
                     <div class="row col-3 form-group m-0">
                         <label for="set_point_user"></label>
                         <select name="set_point_user" id="set_point_user" class="form-control">
@@ -88,7 +89,7 @@ function index($match, $score, $is_edit)
                             <?php endforeach; ?>
                         </select>
                     </div>
-                <div class="row col-3 m-0"><span class="text-center h3 m-0 w-100">User2</span></div>
+                <div class="row col-3 m-0"><span class="text-center h3 m-0 w-100"><?php echo $opponent_name; ?></span></div>
             </div>
 
             <div class="text-center mt-3"><span class="h5">1st SET</span></div>
