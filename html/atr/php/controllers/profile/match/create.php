@@ -31,9 +31,13 @@ function get()
     if (empty($match)) {
         $match = new MatchQuery;
         $match->id = -1;
+        $match->prefecture_id = 0;
+        $match->city = '';
+        $match->venue = '';
         $match->match_date = date('Y-m-d');
         $match->match_type = 0;
         $match->win_flg = 0;
+        $match->del_flg = 0;
     }
 
     if (empty($score)) {

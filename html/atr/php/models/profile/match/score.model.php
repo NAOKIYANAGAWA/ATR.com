@@ -21,6 +21,5 @@ class ScoreModel extends AbstractModel
     public int $fourth_set_game_point_opponent;
     public int $fifth_set_game_point_user;
     public int $fifth_set_game_point_opponent;
-    public int $del_flg;
     protected static $SESSION_NAME = '_score';
 }

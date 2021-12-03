@@ -9,28 +9,6 @@ use model\profile\match\ScoreModel;
 
 class MatchQuery
 {
-    public static function isYourOwnMatch($topic_id, $user)
-    {
-        // if (!(MatchModel::validateId($topic_id) && $user->isValidEmail())) {
-        //     return false;
-        // }
-
-        $db = new DataSource;
-        $sql = '
-        select count(1) from pollapp.topics t
-        where t.id = :topic_id
-            and t.user_id = :user_id
-            and t.del_flg != 1;
-        ';
-
-        $result = $db->selectOne($sql, [
-            ':topic_id' => $topic_id,
-            ':user_id' => $user->id,
-        ]);
-
-        return $result;
-    }
-
     public static function fetchByUserId($user)
     {
         if (!$user->isValidEmail()) {
@@ -295,15 +273,7 @@ class MatchQuery
         del_flg = 1
         where id = :id';
 
-        $is_success = $db->execute($sql, [':id' => $match_id,]);
-
-        if ($is_success) {
-            $sql = 'update scores set
-            del_flg = 1
-            where match_id = :match_id';
-
-            return $db->execute($sql, [':match_id' => $match_id,]);
-        }
+        return $db->execute($sql, [':id' => $match_id,]);
     }
 
     public static function fetchByMatchId($match)
