@@ -50,7 +50,7 @@ class MatchQuery
     public static function fetchAll()
     {
         $db = new DataSource;
-        $sql = 'select * from matches;';
+        $sql = 'select * from matches where del_flg != 1;';
 
         $result = $db->select($sql, [], DataSource::CLS, MatchModel::class);
 
@@ -60,7 +60,7 @@ class MatchQuery
     public static function fetchDistinctUsers()
     {
         $db = new DataSource;
-        $sql = 'select distinct id, nickname from users;';
+        $sql = 'select distinct id, nickname from users where del_flg != 1;';
 
         $result = $db->select($sql, [], DataSource::CLS, MatchModel::class);
 
@@ -79,7 +79,7 @@ class MatchQuery
         where m.user_id = :id
             and m.del_flg != 1
             and u.del_flg != 1
-        order by m.user_id asc
+        order by m.match_date desc
         ';
 
         $result = $db->select($sql, [':id' => $user_id], DataSource::CLS, MatchModel::class);
