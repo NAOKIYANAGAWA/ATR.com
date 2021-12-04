@@ -5,11 +5,9 @@ use lib\Msg;
 
 class UserModel extends AbstractModel {
 
-    public string $id;
     public string $email;
     public string $pwd;
     public string $nickname;
-    public int $del_flg;
 
     protected static $SESSION_NAME = '_user';
 

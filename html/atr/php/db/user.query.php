@@ -33,7 +33,7 @@ class UserQuery
     public static function insert($user)
     {
         $db = new DataSource;
-        $sql = 'insert into users(email, pwd, nickname) values (:email, :pwd, :nickname)';
+        $sql = 'insert into users(email, pwd, nickname, registered) values (:email, :pwd, :nickname, now())';
 
         $user->pwd = password_hash($user->pwd, PASSWORD_DEFAULT);
 

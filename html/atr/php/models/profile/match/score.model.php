@@ -7,7 +7,6 @@ use model\AbstractModel;
 
 class ScoreModel extends AbstractModel
 {
-    public int $id;
     public int $match_id;
     public int $set_point_user;
     public int $set_point_opponent;
