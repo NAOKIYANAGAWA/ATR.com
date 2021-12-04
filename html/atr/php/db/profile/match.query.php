@@ -2,6 +2,7 @@
 
 namespace db\profile;
 
+use lib\Msg;
 use db\DataSource;
 use model\profile\MatchModel;
 use model\UserModel;
@@ -102,6 +103,11 @@ class MatchQuery
         $result = $db->selectOne($sql, [
             ':user_id' => $user_id
         ], DataSource::CLS, ScoreModel::class);
+
+        if(empty($result)) {
+            Msg::push(Msg::ERROR, '試合情報が見つかりませんでした。');
+            return;
+        }
 
         return $result;
     }

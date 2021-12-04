@@ -15,7 +15,6 @@ function get()
 
     if (get_param('user_id', null, false)) {
         $user_id = get_param('user_id', null, false);
-        $user = UserQuery::fetchById($user_id);
     } else {
         $user_id = $auth_user->id;
     }
@@ -31,6 +30,9 @@ function get()
         $score->match_id = get_param('match_id', null, false);
     } else {
         $match_id = MatchQuery::fetchMostRecentMatchByUserId($user_id);
+        if(!$match_id){
+            redirect(GO_REFERER);
+        }
         $score->match_id = $match_id->id;
     }
     $score = MatchQuery::fetchScoreByMatchId($score);
