@@ -18,7 +18,8 @@ function get()
     $score = ScoreModel::getSessionAndFlush();
 
     if (!empty($match)) {
-        \view\profile\match\edit\index($match, $score, true);
+        $match->opponent_id = MatchQuery::fetchOpponentNameByOpponentId($match->opponent_id)->nickname;
+        \view\profile\match\edit\index($match, $score, $user, true);
         return;
     }
 

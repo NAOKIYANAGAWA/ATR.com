@@ -28,6 +28,10 @@ function get()
     $match = MatchModel::getSessionAndFlush();
     $score = ScoreModel::getSessionAndFlush();
 
+    if(!empty($match)){
+        $match->opponent_id = MatchQuery::fetchOpponentNameByOpponentId($match->opponent_id)->nickname;
+    }
+
     if (empty($match)) {
         $match = new MatchQuery;
         $match->id = -1;
