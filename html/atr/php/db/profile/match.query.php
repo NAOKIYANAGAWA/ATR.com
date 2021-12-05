@@ -218,6 +218,16 @@ class MatchQuery
 
     public static function update($match, $score, $db)
     {
+
+        if (!(
+            $match->isValidMatchType()
+            // * $match->isValidUserId()
+            // * $match->isValidOpponentId()
+            // * $match->isValidWinFlg()
+        )) {
+            return false;
+        }
+
         $sql = 'update matches set
                 opponent_id = :opponent_id,
                 prefecture_id = :prefecture_id,

@@ -9,7 +9,7 @@ use staticList;
 class MatchModel extends AbstractModel
 {
     public int $user_id;
-    public int $opponent_id;
+    // public int $opponent_id;
     public int $prefecture_id;
     public string $city;
     public string $venue;
