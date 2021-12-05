@@ -3,6 +3,9 @@ namespace view\register;
 
 function index() {
 ?>
+
+<?php \partials\header(); ?>
+
 <h1 class="sr-only">アカウント登録</h1>
 <div class="mt-5">
     <div class="text-center mb-4">
@@ -36,4 +39,7 @@ function index() {
         </form>
     </div>
 </div>
+
+<?php \partials\footer(); ?>
+
 <?php } ?>

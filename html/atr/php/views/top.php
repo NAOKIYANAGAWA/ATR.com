@@ -5,6 +5,8 @@ function index($rank_info)
 {
     ?>
 
+    <?php \partials\header(); ?>
+
     <div class="text-center my-5">
         <h2>ランキングTOP10</h2>
     </div>
@@ -33,6 +35,8 @@ function index($rank_info)
             </tbody>
         </table>
     </div>
+
+    <?php \partials\footer(); ?>
 
     <?php
 }

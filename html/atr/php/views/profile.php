@@ -5,6 +5,8 @@ function index($user, $result, $points, $user_id)
 {
     ?>
 
+<?php \partials\header(); ?>
+
     <div class="container-fluid">
         <div class="row">
 
@@ -42,6 +44,8 @@ function index($user, $result, $points, $user_id)
             </main>
         </div>
     </div>
+
+<?php \partials\footer(); ?>
 
 <?php
 }

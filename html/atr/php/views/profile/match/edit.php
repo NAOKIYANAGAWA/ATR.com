@@ -6,7 +6,11 @@ use staticList;
 function index($match, $score, $user = '', $is_edit)
 {
     $header_title = $is_edit ? '試合編集' : '試合登録';
-    $opponent_name = $is_edit ? $match->opponent_id : '対戦相手'; ?>
+    $opponent_name = $is_edit ? $match->opponent_id : '対戦相手';
+    ?>
+
+<?php \partials\header(); ?>
+
     <h1 class="h2 mb-3"><?php echo $header_title ?></h1>
 
     <div class="bg-white p-4 shadow-sm mx-auto rounded">
@@ -278,6 +282,8 @@ function index($match, $score, $user = '', $is_edit)
 
         </form>
     </div>
+
+<?php \partials\footer(); ?>
 
 <?php
 }

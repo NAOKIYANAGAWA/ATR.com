@@ -5,6 +5,8 @@ function index($matchs, $users, $scores, $fetchedScore, $permission, $user_id)
 {
     ?>
 
+<?php \partials\header(); ?>
+
     <div class="container-fluid">
         <div class="row">
 
@@ -19,6 +21,8 @@ function index($matchs, $users, $scores, $fetchedScore, $permission, $user_id)
             </main>
         </div>
     </div>
+
+<?php \partials\footer(); ?>
 
 <?php
 }
