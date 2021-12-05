@@ -21,7 +21,7 @@ function get()
 
     $permission = false;
 
-    if ($auth_user->id === $user_id) {
+    if ($auth_user->id == $user_id) {
         $permission = true;
     }
 
@@ -36,8 +36,6 @@ function get()
         $score->match_id = $match_id->id;
     }
     $score = MatchQuery::fetchScoreByMatchId($score);
-
-    //todo getのparamがない時のメッセージ表示
 
     $matchs = MatchQuery::joinUsers($user_id);
 
