@@ -1,4 +1,5 @@
 <?php
+// ini_set('display_errors', "On");
 
 require_once 'config.php';
 require_once 'staticList.php';
@@ -44,14 +45,12 @@ use function lib\route;
 session_start();
 
 try {
-    \partials\header();
 
     $url = parse_url(CURRENT_URI);
     $rpath = str_replace(BASE_CONTEXT_PATH, '', $url['path']);
     $method = strtolower($_SERVER['REQUEST_METHOD']);
     route($rpath, $method);
 
-    \partials\footer();
 } catch (Throwable $e) {
     die('<h1>エラーが発生しました管理者にお問い合わせください</h1>');
 }
