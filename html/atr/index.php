@@ -45,12 +45,10 @@ use function lib\route;
 session_start();
 
 try {
-
     $url = parse_url(CURRENT_URI);
     $rpath = str_replace(BASE_CONTEXT_PATH, '', $url['path']);
     $method = strtolower($_SERVER['REQUEST_METHOD']);
     route($rpath, $method);
-
 } catch (Throwable $e) {
     die('<h1>エラーが発生しました管理者にお問い合わせください</h1>');
 }

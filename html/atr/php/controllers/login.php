@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace controller\login;
 
 use lib\Auth;
@@ -7,13 +7,13 @@ use model\UserModel;
 
 function get() {
 
-    
+
     \view\login\index();
 
 }
 
 function post() {
-    
+
     $email = get_param('email', '');
     $pwd = get_param('pwd', '');
 

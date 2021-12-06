@@ -25,20 +25,25 @@ class UserModel extends AbstractModel {
             $res = false;
         } else {
 
-            if(strlen($val) > 30) {
-                Msg::push(Msg::ERROR, 'Emailは１０桁以下で入力してください。');
+            if(strlen($val) > 50) {
+                Msg::push(Msg::ERROR, 'Emailは50文字以下で入力してください。');
                 $res = false;
             }
 
-            //ToDo emailのバリデーションを追加
-            // if(!is_alnum($val)) {
-            //     Msg::push(Msg::ERROR, 'Emailの形式で入力してください。');
-            //     $res = false;
-            // }
+            $pattern = "/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/";
+            if(preg_match($pattern, $val )) {
+                Msg::push(Msg::ERROR, 'Emailの形式で入力してください。');
+                $res = false;
+            }
 
         }
 
         return $res;
+    }
+
+    public function isValidPwd()
+    {
+        return static::validatePwd($this->pwd);
     }
 
     public static function validatePwd($val)
@@ -70,9 +75,9 @@ class UserModel extends AbstractModel {
         return $res;
     }
 
-    public function isValidPwd()
+    public function isValidNickname()
     {
-        return static::validatePwd($this->pwd);
+        return static::validateNickname($this->nickname);
     }
 
     public static function validateNickname($val)
@@ -87,9 +92,9 @@ class UserModel extends AbstractModel {
 
         } else {
 
-            if(mb_strlen($val) > 10) {
+            if(mb_strlen($val) > 20) {
 
-                Msg::push(Msg::ERROR, 'ニックネームは１０桁以下で入力してください。');
+                Msg::push(Msg::ERROR, 'ニックネームは20文字以下で入力してください。');
                 $res = false;
 
             }
@@ -98,8 +103,4 @@ class UserModel extends AbstractModel {
         return $res;
     }
 
-    public function isValidNickname()
-    {
-        return static::validateNickname($this->nickname);
-    }
 }

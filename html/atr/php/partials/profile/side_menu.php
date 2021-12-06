@@ -2,8 +2,6 @@
 
 namespace partials\profile;
 
-use model\UserModel;
-
 function side_menu($user_id)
 {
     ?>

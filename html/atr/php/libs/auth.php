@@ -43,6 +43,7 @@ class Auth
     public static function register($user)
     {
         try {
+            //バリデーション
             if (!($user->isValidEmail()
                 * $user->isValidPwd()
                 * $user->isValidNickname())) {

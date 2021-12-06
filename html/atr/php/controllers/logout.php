@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace controller\logout;
 
 use lib\Auth;

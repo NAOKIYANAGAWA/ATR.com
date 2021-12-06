@@ -1,7 +1,7 @@
 <?php
 namespace view\profile\match;
 
-function index($matchs, $users, $scores, $fetchedScore, $permission, $user_id)
+function index($params, $permission)
 {
     ?>
 
@@ -10,13 +10,13 @@ function index($matchs, $users, $scores, $fetchedScore, $permission, $user_id)
     <div class="container-fluid">
         <div class="row">
 
-            <?php \partials\profile\side_menu($user_id); ?>
+            <?php \partials\profile\side_menu($params['user_id']); ?>
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-                <?php \partials\profile\match\detail($matchs, $fetchedScore, $users); ?>
+                <?php \partials\profile\match\detail($params['matchs'], $params['match_detail'], $params['users']); ?>
 
-                <?php \partials\profile\match\history($matchs, $users, $scores, $user_id, $permission); ?>
+                <?php \partials\profile\match\history($params['matchs'], $params['users'], $params['scores'], $params['user_id'], $permission); ?>
 
             </main>
         </div>

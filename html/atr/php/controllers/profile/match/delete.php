@@ -13,9 +13,9 @@ function get()
 {
     Auth::requireLogin();
 
-    $param = get_param('action', null, false);
+    $action = get_param('action', null, false);
     $match_id = get_param('match_id', null, false);
-    if ($param != 'delete') {
+    if ($action != 'delete') {
         \view\profile\match\delete\index($match_id);
         return;
     }

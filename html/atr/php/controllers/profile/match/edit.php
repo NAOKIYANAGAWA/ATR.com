@@ -19,59 +19,49 @@ function get()
 
     if (!empty($match)) {
         $match->opponent_id = MatchQuery::fetchOpponentNameByOpponentId($match->opponent_id)->nickname;
-        \view\profile\match\edit\index($match, $score, $user, true);
+        $params['match'] = $match;
+        $params['score'] = $score;
+        \view\profile\match\edit\index($params, true);
         return;
     }
 
-    $match = new MatchModel;
-    $match->id = get_param('match_id', null, false);
+    // $match = new MatchModel;
+    $match_id = get_param('match_id', null, false);
     $user = UserModel::getSession();
-    Auth::requirePermission($match->id, $user);
 
-    $match = new MatchModel;
-    $match->id = get_param('match_id', null, false);
+    Auth::requirePermission($match_id, $user);
 
-    $fetchedMatch = MatchQuery::fetchByMatchId($match);
-    $fetchedMatch->opponent_id = MatchQuery::fetchOpponentNameByOpponentId($fetchedMatch->opponent_id)->nickname;
+    // $match = new MatchModel;
+    $match = MatchQuery::fetchByMatchId($match_id);
+    $match->opponent_id = MatchQuery::fetchOpponentNameByOpponentId($match->opponent_id)->nickname;
 
-    $score = new ScoreModel;
-    $score->match_id = get_param('match_id', null, false);
+    // $score = new ScoreModel;
+    $score = MatchQuery::fetchScoreByMatchId($match_id);
 
-    $fetchedScore = MatchQuery::fetchScoreByMatchId($score);
+    $params['match'] = $match;
+    $params['score'] = $score;
+    $params['user'] = $user;
 
-    \view\profile\match\edit\index($fetchedMatch, $fetchedScore, $user, true);
+    \view\profile\match\edit\index($params, true);
 }
 
 function post()
 {
     Auth::requireLogin();
 
-    $opponent_id = MatchQuery::fetchOpponentIdByOpponentName(get_param('opponent_id', null));
+    $params = $_POST;
 
     $match = new MatchModel;
-    $match->id = get_param('id', null);
-    $match->opponent_id = $opponent_id->id;
-    $match->prefecture_id = get_param('prefecture_id', null);
-    $match->city = get_param('city', null);
-    $match->venue = get_param('venue', null);
-    $match->match_date = date('Y-m-d', strtotime(get_param('match_date', null)));
-    $match->match_type = get_param('match_type', null);
-    $match->win_flg = get_param('win_flg', null);
+    $match->init_params();
+    $match = MatchModel::set_params($match, $params);
 
-    $score = new scoreModel;
+    //nickname->idに変換
+    $match->opponent_id = MatchQuery::fetchOpponentIdByOpponentName(get_param('opponent_id', null))->id;
+
+    $score = new ScoreModel;
+    $score->init_params();
+    $score = ScoreModel::set_params($score, $params);
     $score->match_id = get_param('id', null);
-    $score->set_point_user = get_param('set_point_user', null);
-    $score->set_point_opponent = get_param('set_point_opponent', null);
-    $score->first_set_game_point_user = get_param('first_set_game_point_user', null);
-    $score->first_set_game_point_opponent = get_param('first_set_game_point_opponent', null);
-    $score->second_set_game_point_user = get_param('second_set_game_point_user', null);
-    $score->second_set_game_point_opponent = get_param('second_set_game_point_opponent', null);
-    $score->third_set_game_point_user = get_param('third_set_game_point_user', null);
-    $score->third_set_game_point_opponent = get_param('third_set_game_point_opponent', null);
-    $score->fourth_set_game_point_user = get_param('fourth_set_game_point_user', null);
-    $score->fourth_set_game_point_opponent = get_param('fourth_set_game_point_opponent', null);
-    $score->fifth_set_game_point_user = get_param('fifth_set_game_point_user', null);
-    $score->fifth_set_game_point_opponent = get_param('fifth_set_game_point_opponent', null);
 
     try {
         $db = new DataSource;

@@ -8,7 +8,7 @@ function index($rank_info)
     <?php \partials\header(); ?>
 
     <div class="text-center my-5">
-        <h2>ランキングTOP10</h2>
+        <h2>ランキング</h2>
     </div>
 
     <div>

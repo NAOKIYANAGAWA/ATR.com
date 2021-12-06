@@ -112,14 +112,14 @@ class MatchQuery
         return $result;
     }
 
-    public static function fetchScoreByMatchId($score)
+    public static function fetchScoreByMatchId($match_id)
     {
         $db = new DataSource;
         $sql = '
         select * from scores where match_id = :match_id';
 
         $result = $db->selectOne($sql, [
-            ':match_id' => $score->match_id
+            ':match_id' => $match_id
         ], DataSource::CLS, ScoreModel::class);
 
         return $result;
@@ -136,7 +136,6 @@ class MatchQuery
             return false;
         }
 
-        // $db = new DataSource;
         $sql = 'insert into matches(
                     opponent_id,
                     prefecture_id,
@@ -239,6 +238,7 @@ class MatchQuery
                 where id = :id';
 
         $is_success = $db->execute($sql, [
+            ':id' => $match->id,
             ':opponent_id' => $match->opponent_id,
             ':prefecture_id' => $match->prefecture_id,
             ':city' => $match->city,
@@ -246,7 +246,6 @@ class MatchQuery
             ':match_date' => $match->match_date,
             ':match_type' => $match->match_type,
             ':win_flg' => $match->win_flg,
-            ':id' => $match->id,
         ]);
 
         if ($is_success) {
@@ -292,7 +291,7 @@ class MatchQuery
         return $db->execute($sql, [':id' => $match_id,]);
     }
 
-    public static function fetchByMatchId($match)
+    public static function fetchByMatchId($match_id)
     {
         //todo
         // if (!$match->isValidId()) {
@@ -304,7 +303,7 @@ class MatchQuery
         select * from matches where id = :id';
 
         $result = $db->selectOne($sql, [
-            ':id' => $match->id
+            ':id' => $match_id
         ], DataSource::CLS, MatchModel::class);
 
         return $result;

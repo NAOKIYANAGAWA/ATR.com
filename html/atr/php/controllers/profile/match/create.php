@@ -12,88 +12,50 @@ use model\profile\match\scoreModel;
 
 function get()
 {
-    //ajaxリスポンス
-    $opponent_id = get_param('opponent_id', null, false);
-    if ($opponent_id) {
-        $opponents = MatchQuery::fetchAllOpponent($opponent_id);
-        foreach ($opponents as $opponent) {
-            echo 'opponent_id:' . $opponent->nickname .'<br>';
-        }
-        return;
-    }
-
     Auth::requireLogin();
     $user = UserModel::getSession();
 
     $match = MatchModel::getSessionAndFlush();
     $score = ScoreModel::getSessionAndFlush();
 
-    if(!empty($match)){
+    //id->nicknameに変換
+    if (!empty($match)) {
         $match->opponent_id = MatchQuery::fetchOpponentNameByOpponentId($match->opponent_id)->nickname;
     }
 
     if (empty($match)) {
-        $match = new MatchQuery;
-        $match->id = -1;
-        $match->prefecture_id = 0;
-        $match->city = '';
-        $match->venue = '';
-        $match->match_date = date('Y-m-d');
-        $match->match_type = 0;
-        $match->win_flg = 0;
-        $match->del_flg = 0;
+        $match = new MatchModel;
+        $match->init_params();
     }
 
     if (empty($score)) {
         $score = new ScoreModel;
-        $score->match_id = 0;
-        $score->set_point_user = 0;
-        $score->set_point_opponent = 0;
-        $score->first_set_game_point_user = 0;
-        $score->first_set_game_point_opponent = 0;
-        $score->second_set_game_point_user = 0;
-        $score->second_set_game_point_opponent = 0;
-        $score->third_set_game_point_user = 0;
-        $score->third_set_game_point_opponent = 0;
-        $score->fourth_set_game_point_user = 0;
-        $score->fourth_set_game_point_opponent = 0;
-        $score->fifth_set_game_point_user = 0;
-        $score->fifth_set_game_point_opponent = 0;
+        $score->init_params();
     }
 
-    \view\profile\match\edit\index($match, $score, $user, false);
+    $params['match'] = $match;
+    $params['score'] = $score;
+    $params['user'] = $user;
+
+    \view\profile\match\edit\index($params, false);
 }
 
 function post()
 {
     Auth::requireLogin();
 
-    $opponent_id = MatchQuery::fetchOpponentIdByOpponentName(get_param('opponent_id', null));
+    $params = $_POST;
 
     $match = new MatchModel;
-    $match->id = get_param('id', null);
-    $match->opponent_id = $opponent_id->id;
-    $match->prefecture_id = get_param('prefecture_id', null);
-    $match->city = get_param('city', null);
-    $match->venue = get_param('venue', null);
-    $match->match_date = date('Y-m-d', strtotime(get_param('match_date', null)));
-    $match->match_type = get_param('match_type', null);
-    $match->win_flg = get_param('win_flg', null);
+    $match->init_params();
+    $match = MatchModel::set_params($match, $params);
 
-    $score = new scoreModel;
-    $score->match_id = get_param('id', null);
-    $score->set_point_user = get_param('set_point_user', null);
-    $score->set_point_opponent = get_param('set_point_opponent', null);
-    $score->first_set_game_point_user = get_param('first_set_game_point_user', null);
-    $score->first_set_game_point_opponent = get_param('first_set_game_point_opponent', null);
-    $score->second_set_game_point_user = get_param('second_set_game_point_user', null);
-    $score->second_set_game_point_opponent = get_param('second_set_game_point_opponent', null);
-    $score->third_set_game_point_user = get_param('third_set_game_point_user', null);
-    $score->third_set_game_point_opponent = get_param('third_set_game_point_opponent', null);
-    $score->fourth_set_game_point_user = get_param('fourth_set_game_point_user', null);
-    $score->fourth_set_game_point_opponent = get_param('fourth_set_game_point_opponent', null);
-    $score->fifth_set_game_point_user = get_param('fifth_set_game_point_user', null);
-    $score->fifth_set_game_point_opponent = get_param('fifth_set_game_point_opponent', null);
+    //nickname->idに変換
+    $match->opponent_id = MatchQuery::fetchOpponentIdByOpponentName(get_param('opponent_id', null))->id;
+
+    $score = new ScoreModel;
+    $score->init_params();
+    $score = ScoreModel::set_params($score, $params);
 
     try {
         $user = UserModel::getSession();
