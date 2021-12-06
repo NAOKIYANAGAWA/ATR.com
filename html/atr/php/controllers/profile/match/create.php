@@ -49,6 +49,7 @@ function post()
     $match = new MatchModel;
     $match->init_params();
     $match = MatchModel::set_params($match, $params);
+    $match->match_date = MatchModel::add_current_time($match->match_date);
 
     //nickname->idに変換
     $match->opponent_id = MatchQuery::fetchOpponentIdByOpponentName(get_param('opponent_id', null))->id;

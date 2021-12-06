@@ -167,4 +167,9 @@ class MatchModel extends AbstractModel
         //上位10のみ取得
         return  array_slice($rank_info, 0, 30);
     }
+
+    public static function add_current_time($date)
+    {
+        return date('Y-m-d H:i:s', strtotime($date.date('H:i:s')));
+    }
 }
