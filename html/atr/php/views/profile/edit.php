@@ -19,7 +19,7 @@ function index($param)
             <input type="hidden" name="id" value="<?php echo $param['user']->id; ?>">
             <div class="form-group">
                 <span class="text-danger">*</span><label for="nickname">ニックネーム</label>
-                <input type="text" id="nickname" name="nickname" value="<?php echo $param['user']->nickname; ?>" class="form-control" placeholder="ユーザー名を入力" autofocus>
+                <input type="text" id="opponent_id" name="nickname" value="<?php echo $param['user']->nickname; ?>" class="form-control" placeholder="ユーザー名を入力" autofocus>
                 <div class="valid-feedback">
                     既に使用されています
                 </div>
