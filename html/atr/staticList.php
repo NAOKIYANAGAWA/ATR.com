@@ -102,7 +102,33 @@ class StaticList
         self::PREFECTURE_OKINAWA => '沖縄県',
         self::PREFECTURE_FOREIGN => '日本国外',
     );
-    
+
+    const USRE_LEVEL_UNSELECTED = 0;
+    const USRE_LEVEL_ONE = 1;
+    const USRE_LEVEL_TWO = 2;
+    const USRE_LEVEL_THREE = 3;
+    const USRE_LEVEL_FOUR = 4;
+    const USRE_LEVEL_FIVE = 5;
+    const USRE_LEVEL_SIX = 6;
+    const USRE_LEVEL_SEVEM = 7;
+    const USRE_LEVEL_EIGHT = 8;
+    const USRE_LEVEL_NINE = 9;
+    const USRE_LEVEL_TEN = 10;
+
+    public static $user_level = array(
+        self::USRE_LEVEL_UNSELECTED => '未選択',
+        self::USRE_LEVEL_ONE => 1,
+        self::USRE_LEVEL_TWO => 2,
+        self::USRE_LEVEL_THREE => 3,
+        self::USRE_LEVEL_FOUR => 4,
+        self::USRE_LEVEL_FIVE => 5,
+        self::USRE_LEVEL_SIX => 6,
+        self::USRE_LEVEL_SEVEM => 7,
+        self::USRE_LEVEL_EIGHT => 8,
+        self::USRE_LEVEL_NINE => 9,
+        self::USRE_LEVEL_TEN => 10,
+    );
+
     const MATCH_TYPE_UNSELECTED = 0;
     const MATCH_TYPE_1SET = 1;
     const MATCH_TYPE_3SET = 3;

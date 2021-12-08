@@ -43,4 +43,25 @@ class UserQuery
             ':nickname' => $user->nickname,
         ]);
     }
+
+    public static function update($user, $db)
+    {
+        // if (!(
+        //     $user->isValidUserId()
+        //     * $user->isValidLevelParam()
+        // )) {
+        //     return false;
+        // }
+
+        $sql = 'update users set
+                nickname = :nickname,
+                level = :level
+                where id = :id';
+
+        return $db->execute($sql, [
+            ':nickname' => $user->nickname,
+            ':level' => $user->level,
+            ':id' => $user->id,
+        ]);
+    }
 }

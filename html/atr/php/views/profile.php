@@ -1,7 +1,7 @@
 <?php
 namespace view\profile;
 
-function index($params)
+function index($params, $permission)
 {
     ?>
 
@@ -20,7 +20,12 @@ function index($params)
 
             <div class="container">
                 <div class="row justify-content-center">
-                    <img class="rounded-circle" width="100" src="<?php echo BASE_IMAGE_PATH; ?>profile.png" alt="">
+                    <div class="position-relative">
+                        <img class="rounded-circle" width="100" src="<?php echo BASE_IMAGE_PATH; ?>profile.png" alt="">
+                        <?php if ($permission):?>
+                            <a class="fs-1 position-absolute top-0 start-100 badge" href="<?php the_url('profile/edit?user_id='); ?><?php echo $params['user']->id; ?>">編集</a>
+                        <?php endif; ?>
+                    </div>
                 </div>
                 <div class="row justify-content-center">
                     <span class="mt-1 h3"><?php echo $params['user']->nickname ?></span>
@@ -36,7 +41,7 @@ function index($params)
                         </div>
                         <div class="justify-content-center d-block row col-4 m-0">
                             <h5 class="text-center">レベル</h5>
-                            <span class="text-center d-block w-100">中級</span>
+                            <span class="text-center d-block w-100"><?php echo $params['user']->level; ?></span>
                         </div>
                 </div>
             </div>

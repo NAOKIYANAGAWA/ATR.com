@@ -6,8 +6,7 @@ use staticList;
 function index($params, $is_edit)
 {
     $header_title = $is_edit ? '試合編集' : '試合登録';
-    $opponent_name = $is_edit ? $params['match']->opponent_id : '対戦相手';
-    ?>
+    $opponent_name = $is_edit ? $params['match']->opponent_id : '対戦相手'; ?>
 
 <?php \partials\header(); ?>
 
