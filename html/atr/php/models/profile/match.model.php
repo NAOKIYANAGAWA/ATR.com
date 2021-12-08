@@ -32,7 +32,7 @@ class MatchModel extends AbstractModel
         $this->prefecture_id = 0;
         $this->city = '';
         $this->venue = '';
-        $this->match_date = date('Y-m-d h:m:s');
+        $this->match_date = date('Y-m-d H:i:s');
         $this->match_type = 0;
         $this->win_flg = 0;
     }

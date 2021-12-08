@@ -14,10 +14,7 @@ function get()
     $user = UserModel::getSession();
 
     $room_id = get_param('room_id', null, false);
-    //ユーザー権限
-    // if (!empty($user)) {
-    //     //リダイレクト処理
-    // }
+
     if ($room_id) {
         $init_chat_room = ChatQuery::fetchInitChatRoomByRoomId($room_id);
     } else {
@@ -31,9 +28,6 @@ function get()
     $params['chat_rooms'] = $chat_rooms;
     $params['chats'] = $chats;
     $params['user'] = $user;
-    // echo '<pre>';
-    // print_r($params);
-    // echo '</pre>';
-    // exit;
+
     \view\chat\index($params);
 }

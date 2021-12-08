@@ -15,7 +15,7 @@ class ChatModel extends AbstractModel
     {
         $this->agent_id = 0;
         $this->is_agent = 1;
-        $this->created_at = date('Y-m-d h:m:s');
+        $this->created_at = date('Y-m-d H:i:s');
     }
 
     public static function set_params($target, $params)

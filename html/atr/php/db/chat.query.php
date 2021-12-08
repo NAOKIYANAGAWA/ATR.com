@@ -3,10 +3,7 @@ namespace db;
 
 use lib\Msg;
 use db\DataSource;
-use model\profile\MatchModel;
-use model\UserModel;
 use model\ChatModel;
-use model\profile\match\ScoreModel;
 
 class ChatQuery
 {
@@ -93,13 +90,14 @@ class ChatQuery
                     :chat_room_id,
                     :user_id,
                     :message,
-                    now()
+                    :created_at
                 )';
 
         return $db->execute($sql, [
             ':chat_room_id' => (int)$params['chat_room_id'],
             ':user_id' => (int)$params['user_id'],
             ':message' => $params['message'],
+            ':created_at' => date('Y-m-d H:i:s'),
         ], true);
     }
 }

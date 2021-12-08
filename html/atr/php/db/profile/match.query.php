@@ -143,7 +143,8 @@ class MatchQuery
                     venue,
                     match_date,
                     match_type,
-                    win_flg, user_id
+                    win_flg,
+                    user_id
                 ) values (
                     :opponent_id,
                     :prefecture_id,
