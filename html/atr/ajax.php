@@ -21,6 +21,7 @@ require_once SOURCE_BASE . 'libs/message.php';
 // DB
 require_once SOURCE_BASE . 'db/datasource.php';
 require_once SOURCE_BASE . 'db/user.query.php';
+require_once SOURCE_BASE . 'db/chat.query.php';
 require_once SOURCE_BASE . 'db/profile/match.query.php';
 
 // Partials
@@ -41,6 +42,7 @@ require_once SOURCE_BASE . 'views/profile/match/edit.php';
 require_once SOURCE_BASE . 'views/profile/match/delete.php';
 
 use db\profile\MatchQuery;
+use db\ChatQuery;
 
 if ($_GET['opponent_id']) {
     $opponents = MatchQuery::fetchAllOpponent($_GET['opponent_id']);
@@ -48,4 +50,9 @@ if ($_GET['opponent_id']) {
     foreach ($opponents as $opponent) {
         echo $opponent->nickname;
     }
+}
+
+if ($_POST) {
+    $params = $_POST;
+    return ChatQuery::insert($params);
 }

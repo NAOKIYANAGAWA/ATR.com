@@ -104,7 +104,7 @@ class MatchQuery
             ':user_id' => $user_id
         ], DataSource::CLS, ScoreModel::class);
 
-        if(empty($result)) {
+        if (empty($result)) {
             Msg::push(Msg::ERROR, '試合情報が見つかりませんでした。');
             return;
         }
@@ -217,7 +217,6 @@ class MatchQuery
 
     public static function update($match, $score, $db)
     {
-
         if (!(
             $match->isValidMatchType()
             // * $match->isValidUserId()

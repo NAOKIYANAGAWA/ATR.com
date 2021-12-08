@@ -12,6 +12,7 @@ require_once SOURCE_BASE . 'libs/router.php';
 // Model
 require_once SOURCE_BASE . 'models/abstract.model.php';
 require_once SOURCE_BASE . 'models/user.model.php';
+require_once SOURCE_BASE . 'models/chat.model.php';
 require_once SOURCE_BASE . 'models/profile/match.model.php';
 require_once SOURCE_BASE . 'models/profile/match/score.model.php';
 
@@ -21,6 +22,7 @@ require_once SOURCE_BASE . 'libs/message.php';
 // DB
 require_once SOURCE_BASE . 'db/datasource.php';
 require_once SOURCE_BASE . 'db/user.query.php';
+require_once SOURCE_BASE . 'db/chat.query.php';
 require_once SOURCE_BASE . 'db/profile/match.query.php';
 
 // Partials
@@ -40,7 +42,7 @@ require_once SOURCE_BASE . 'views/profile/edit.php';
 require_once SOURCE_BASE . 'views/profile/match.php';
 require_once SOURCE_BASE . 'views/profile/match/edit.php';
 require_once SOURCE_BASE . 'views/profile/match/delete.php';
-require_once SOURCE_BASE . 'views/message.php';
+require_once SOURCE_BASE . 'views/chat.php';
 
 use function lib\route;
 
