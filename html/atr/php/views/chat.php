@@ -18,8 +18,8 @@ function index($params)
                         </div>
                         <input type="text" class="form-control" placeholder="Search...">
                     </div>
-                    <?php foreach ($params['chat_rooms'] as $chat_room): ?>
-                    <ul class="list-unstyled chat-list mt-2 mb-0">
+                    <ul class="list-unstyled chat-list mt-2 mb-0 pre-scrollable" style="width:auto; height:auto; max-height:500px; min-height:500px;">
+                        <?php foreach ($params['chat_rooms'] as $chat_room): ?>
                         <li class="clearfix">
                             <a href="<?php the_url('chat?room_id='); ?><?php echo $chat_room->id; ?>">
                                 <img src="<?php echo BASE_IMAGE_PATH; ?>profile.png" alt="avatar">
@@ -29,7 +29,7 @@ function index($params)
                                 </div>
                             </a>
                         </li>
-                    <?php endforeach; ?>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
                 <div class="chat">
@@ -71,6 +71,7 @@ function index($params)
                                     <?php else: ?>
                                     <li class="clearfix">
                                         <div class="message-data">
+                                            <img src="<?php echo BASE_IMAGE_PATH; ?>profile.png" alt="avatar">
                                             <span class="message-data-time"><?php echo $chat->created_at; ?></span>
                                         </div>
                                         <div class="message my-message"><?php echo $chat->message; ?></div>

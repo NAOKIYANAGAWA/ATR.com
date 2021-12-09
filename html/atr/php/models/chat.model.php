@@ -30,4 +30,14 @@ class ChatModel extends AbstractModel
 
         return $target;
     }
+
+    public static function validChatRoom($init_chat_room, $user)
+    {
+        $res = false;
+        if ($init_chat_room->agent_id == $user->id || $init_chat_room->client_id == $user->id) {
+            $res = true;
+        }
+
+        return $res;
+    }
 }

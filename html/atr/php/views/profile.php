@@ -14,8 +14,11 @@ function index($params, $permission)
 
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-            <div class="pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h3">プロフィール</h1>
+            <div class="d-flex pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h3 mr-3">プロフィール</h1>
+                <?php if (!$permission):?>
+                    <a href="<?php the_url('chat?user_id='); ?><?php echo $params['user']->id; ?>" class="btn btn-secondary mr-2">メッセージを送る</a>
+                <?php endif; ?>
             </div>
 
             <div class="container">

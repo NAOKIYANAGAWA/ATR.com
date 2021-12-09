@@ -31,22 +31,50 @@ class ChatQuery
     {
         $db = new DataSource;
 
+        // $sql = '
+        // select
+        //     cr.*, u.nickname
+        // from chat_rooms cr
+        // inner join users u
+        //     on cr.client_id = u.id
+        // where cr.client_id = :client_id
+        //     or cr.agent_id = :agent_id
+        //     and cr.del_flg != 1
+        //     and u.del_flg != 1
+        // order by cr.updated_at asc
+        // ';
+
         $sql = '
         select
             cr.*, u.nickname
         from chat_rooms cr
         inner join users u
             on cr.client_id = u.id
-        where cr.client_id = :client_id
-            or cr.agent_id = :agent_id
+        where cr.agent_id = :agent_id
             and cr.del_flg != 1
             and u.del_flg != 1
         order by cr.updated_at asc
         ';
 
-        $result = $db->select($sql, [':agent_id' => $user->id, ':client_id' => $user->id], DataSource::CLS, ChatModel::class);
+        $is_agent = $db->select($sql, [':agent_id' => $user->id], DataSource::CLS, ChatModel::class);
 
-        return $result;
+        $sql = '
+        select
+            cr.*, u.nickname
+        from chat_rooms cr
+        inner join users u
+            on cr.agent_id = u.id
+        where cr.client_id = :client_id
+            and cr.del_flg != 1
+            and u.del_flg != 1
+        order by cr.updated_at asc
+        ';
+
+        $is_not_agent = $db->select($sql, [':client_id' => $user->id], DataSource::CLS, ChatModel::class);
+
+        $obj_merged = (object) array_merge((array) $is_agent, (array) $is_not_agent);
+
+        return $obj_merged;
     }
 
     public static function fetchALLChats($chat_room_id)
@@ -99,5 +127,34 @@ class ChatQuery
             ':message' => $params['message'],
             ':created_at' => date('Y-m-d H:i:s'),
         ], true);
+    }
+
+    public static function createChatRoom($agent_id, $client_id)
+    {
+        $db = new DataSource;
+
+        $sql ='select id from users where id = :id';
+
+        $is_success = $db->selectOne($sql, [
+            ':id' => $client_id,
+        ]);
+
+        if (!$is_success) {
+            Msg::push(Msg::ERROR, 'ユーザーが見つかりませんでした。');
+            return false;
+        }
+
+        $sql = 'insert ignore into chat_rooms(agent_id, client_id, created_at, updated_at) values (:agent_id, :client_id, now(), now())';
+
+        $is_success = $db->execute($sql, [
+            ':agent_id' => $agent_id,
+            ':client_id' => $client_id,
+        ], true);
+
+        if ($is_success) {
+            return $db->get_lastInsertId();
+        } else {
+            return false;
+        }
     }
 }
